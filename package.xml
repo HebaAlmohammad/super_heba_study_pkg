@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>super_heba_study_pkg</name>
+  <version>0.0.0</version>
+  <description>The ROS package for time printing</description>
+
+  <maintainer email="hebamh@yandex.com">Heba</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <exec_depend>rospy</exec_depend>
+</package>
