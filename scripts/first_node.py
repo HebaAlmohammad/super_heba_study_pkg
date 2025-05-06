@@ -9,5 +9,5 @@ def main():
         rospy.loginfo(f"Current Time: {now}")
         rospy.sleep(5)
 
-if __Heba__ == "__main__":
+if __name__ == "__main__":
     main()
