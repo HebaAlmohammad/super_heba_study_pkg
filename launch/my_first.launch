@@ -1,0 +1,8 @@
+<launch>
+    <group ns="new_ns">
+        <node name="sender" pkg="rospy_tutorials" type="talker.py" output="screen">
+            <remap from="chatter" to="new_topic"/>
+        </node>
+        <include file="$(find super_heba_study_pkg)/launch/another_one.launch"/>
+    </group>
+</launch>
