@@ -1,0 +1,28 @@
+<launch>
+    <!-- Turtlesim Node -->
+    <node pkg="turtlesim" type="turtlesim_node" name="sim"/>
+    
+    <!-- Turtle Teleop Key -->
+    <node pkg="turtlesim" type="turtle_teleop_key" name="teleop" output="screen"/>
+    
+    <!-- Turtle 1 TF Broadcaster -->
+    <node name="turtle1_tf" pkg="super_heba_study_pkg" type="turtle_tf_broadcaster.py" output="screen">
+        <param name="turtle_tf_name" value="turtle1"/>
+        <remap from="input_pose" to="turtle1/pose"/>
+    </node>
+    
+    <!-- Static Transform for Carrot -->
+    <node pkg="tf" type="static_transform_publisher" name="carrot_tf" args="0.3 0 0 0 0 0 turtle1 carrot 100"/>
+    
+    <!-- Turtle 2 TF Broadcaster -->
+    <node name="turtle2_tf" pkg="super_heba_study_pkg" type="turtle_tf_broadcaster.py" output="screen">
+        <param name="turtle_tf_name" value="turtle2"/>
+        <remap from="input_pose" to="turtle2/pose"/>
+    </node>
+    
+    <!-- Turtle 2 Listener -->
+    <node name="listener" pkg="super_heba_study_pkg" type="turtle_tf_listener.py" output="screen"/>
+    
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz"/>
+</launch>

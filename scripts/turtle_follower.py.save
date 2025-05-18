@@ -1,0 +1,36 @@
+#!/usr/bin/env pytoimport rospy
+import tf
+import math
+from geometry_msgs.msg import Twist
+
+class TurtleFollower:
+    def __init__(self):
+        rospy.init_node('turtle_follower')
+        self.listener = tf.TransformListener()
+        self.pub = rospy.Publisher('turtle2/cmd_vel', Twist, queue_size=1)
+        self.rate = rospy.Rate(10.0)
+        rospy.loginfo("Starting turtle follower...")
+
+    def run(self):
+        rospy.sleep(5.0)  # انتظار 5 ثوان للتأكد من اكتمال الاتصالات
+        
+        while not rospy.is_shutdown():
+            try:
+                now = rospy.Time.now()
+                self.listener.waitForTransform("turtle2", "carrot", now, rospy.Duration(1.0))
+                (trans, rot) = self.listener.lookupTransform("turtle2", "carrot", now)
+                
+                msg = Twist()
+                msg.linear.x = 0.5 * math.sqrt(trans[0]**2 + trans[1]**2)
+                msg.angular.z = 4 * math.atan2(trans[1], trans[0])
+                self.pub.publish(msg)
+                
+            except (tf.Exception, rospy.ROSInterruptException) as e:
+                rospy.logerr("Error: %s", str(e))
+                continue
+                
+            self.rate.sleep()
+
+if __name__ == '__main__':
+    follower = TurtleFollower()
+    follower.run()
